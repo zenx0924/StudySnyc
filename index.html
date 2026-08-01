@@ -1,1 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>StudySync AI</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background-gradient"></div>
+
+    <!-- Phone Mockup -->
+    <div class="phone">
+
+        <!-- Status Bar -->
+        <header class="status-bar">
+
+            <span class="time">9:41</span>
+
+            <div class="status-icons">
+                <span>📶</span>
+                <span>📡</span>
+                <span>🔋</span>
+            </div>
+
+        </header>
+
+        <!-- ========================= -->
+        <!-- APP CONTAINER -->
+        <!-- ========================= -->
+
+        <main id="app">
+
+            <!-- ========================= -->
+            <!-- WELCOME SCREEN -->
+            <!-- ========================= -->
+
+            <section
+                id="welcome-screen"
+                class="screen active">
+
+                <div class="welcome-content">
+
+                    <!-- Logo -->
+
+                    <div class="logo-container">
+
+                        <div class="logo">
+
+                            <div class="logo-ring"></div>
+
+                            <div class="logo-core">
+
+                                🎓
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- App Name -->
+
+                    <h1 class="app-title">
+
+                        StudySync <span>AI</span>
+
+                    </h1>
+
+                    <p class="app-description">
+
+                        Organize your studies, stay productive,
+                        and learn smarter with your intelligent
+                        AI-powered study assistant.
+
+                    </p>
+
+                    <!-- Feature Cards -->
+
+                    <div class="feature-grid">
+
+                        <div class="feature-card">
+
+                            <div class="feature-icon">
+
+                                🤖
+
+                            </div>
+
+                            <h3>AI Tutor</h3>
+
+                            <p>
+
+                                Instant explanations,
+                                summaries and study help.
+
+                            </p>
+
+                        </div>
+
+                        <div class="feature-card">
+
+                            <div class="feature-icon">
+
+                                📚
+
+                            </div>
+
+                            <h3>Smart Notes</h3>
+
+                            <p>
+
+                                Keep all of your lectures,
+                                reviewers and flashcards together.
+
+                            </p>
+
+                        </div>
+
+                        <div class="feature-card">
+
+                            <div class="feature-icon">
+
+                                📅
+
+                            </div>
+
+                            <h3>Study Planner</h3>
+
+                            <p>
+
+                                Build productive habits
+                                with intelligent scheduling.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Buttons -->
+
+                    <button
+                        id="startButton"
+                        class="primary-btn">
+
+                        Get Started
+
+                    </button>
+
+                    <button
+                        class="secondary-btn">
+
+                        Sign In
+
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- ========================= -->
+            <!-- PERMISSION SCREEN -->
+            <!-- PART 2 STARTS HERE -->
+                      <section
+                id="permission-screen"
+                class="screen">
+
+                <div class="screen-header">
+
+                    <button class="icon-btn back-btn">
+
+                        ←
+
+                    </button>
+
+                    <h2>
+
+                        Permissions
+
+                    </h2>
+
+                </div>
+
+                <div class="permission-intro">
+
+                    <div class="permission-badge">
+
+                        🔒 Secure Setup
+
+                    </div>
+
+                    <h1>
+
+                        Finish Setting Up
+                        StudySync AI
+
+                    </h1>
+
+                    <p>
+
+                        To personalize your learning experience,
+                        StudySync AI requests the following permissions.
+
+                    </p>
+
+                </div>
+
+                <!-- Permission List -->
+
+                <div class="permission-list">
+
+                    <div class="permission-card">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                📷
+                            </div>
+
+                            <div>
+
+                                <h3>Camera</h3>
+
+                                <p>
+
+                                    Scan notes and homework.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="permission-card">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                🎤
+                            </div>
+
+                            <div>
+
+                                <h3>Microphone</h3>
+
+                                <p>
+
+                                    Voice study sessions.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="permission-card">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                📂
+                            </div>
+
+                            <div>
+
+                                <h3>Files & Storage</h3>
+
+                                <p>
+
+                                    Import PDFs and notes.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <!-- Fictional movie prop permissions -->
+
+                    <div class="permission-card warning">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                📍
+                            </div>
+
+                            <div>
+
+                                <h3>Precise Location</h3>
+
+                                <p>
+
+                                    Improve study recommendations.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="permission-card warning">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                👥
+                            </div>
+
+                            <div>
+
+                                <h3>Contacts</h3>
+
+                                <p>
+
+                                    Find classmates automatically.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="permission-card warning">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                🔄
+                            </div>
+
+                            <div>
+
+                                <h3>Background Sync</h3>
+
+                                <p>
+
+                                    Automatically synchronize learning
+                                    data in the background.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                    <div class="permission-card warning">
+
+                        <div class="permission-left">
+
+                            <div class="permission-icon">
+                                📊
+                            </div>
+
+                            <div>
+
+                                <h3>Usage Analytics</h3>
+
+                                <p>
+
+                                    Improve AI performance with
+                                    anonymous usage statistics.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <label class="switch">
+                            <input
+                                type="checkbox"
+                                checked>
+
+                            <span class="slider"></span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+
+                <div class="permission-footer">
+
+                    <button
+                        id="allowAllBtn"
+                        class="primary-btn">
+
+                        Allow All
+
+                    </button>
+
+                    <button
+                        id="continueBtn"
+                        class="secondary-btn">
+
+                        Continue
+
+                    </button>
+
+                    <p class="permission-note">
+
+                        By continuing, you agree to the
+                        Terms of Service and Privacy Policy.
+
+                    </p>
+
+                </div>
+
+            </section>
+
+            <!-- ========================= -->
+            <!-- DASHBOARD -->
+            <!-- PART 3 STARTS HERE -->
+                      <section
+                id="dashboard-screen"
+                class="screen">
+
+                <!-- Header -->
+
+                <header class="dashboard-header">
+
+                    <div>
+
+                        <p class="greeting">
+
+                            Good Morning 👋
+
+                        </p>
+
+                        <h1>
+
+                            Alex
+
+                        </h1>
+
+                    </div>
+
+                    <div class="profile-avatar">
+
+                        A
+
+                    </div>
+
+                </header>
+
+                <!-- AI Assistant Card -->
+
+                <div class="glass-card hero-card">
+
+                    <div class="hero-text">
+
+                        <span class="hero-tag">
+
+                            AI Assistant
+
+                        </span>
+
+                        <h2>
+
+                            Ready to study?
+
+                        </h2>
+
+                        <p>
+
+                            I can summarize your lessons,
+                            generate quizzes,
+                            and help prepare for exams.
+
+                        </p>
+
+                        <button
+                            class="primary-btn small">
+
+                            Ask AI
+
+                        </button>
+
+                    </div>
+
+                    <div class="hero-icon">
+
+                        🤖
+
+                    </div>
+
+                </div>
+
+                <!-- Progress -->
+
+                <section class="section">
+
+                    <div class="section-title">
+
+                        <h2>
+
+                            Today's Progress
+
+                        </h2>
+
+                        <span>
+
+                            72%
+
+                        </span>
+
+                    </div>
+
+                    <div class="progress-card">
+
+                        <div class="progress-bar">
+
+                            <div
+                                class="progress-fill"
+                                style="width:72%;">
+
+                            </div>
+
+                        </div>
+
+                        <div class="progress-stats">
+
+                            <div>
+
+                                <strong>5</strong>
+
+                                <span>Lessons</span>
+
+                            </div>
+
+                            <div>
+
+                                <strong>2h 45m</strong>
+
+                                <span>Focus</span>
+
+                            </div>
+
+                            <div>
+
+                                <strong>18</strong>
+
+                                <span>Tasks</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- Today's Tasks -->
+
+                <section class="section">
+
+                    <div class="section-title">
+
+                        <h2>
+
+                            Today's Tasks
+
+                        </h2>
+
+                    </div>
+
+                    <div class="task-card">
+
+                        <div class="task-icon">
+
+                            📖
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                Biology Chapter 6
+
+                            </h3>
+
+                            <p>
+
+                                Due in 2 hours
+
+                            </p>
+
+                        </div>
+
+                        <span class="task-status">
+
+                            High
+
+                        </span>
+
+                    </div>
+
+                    <div class="task-card">
+
+                        <div class="task-icon">
+
+                            🧮
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                Algebra Quiz
+
+                            </h3>
+
+                            <p>
+
+                                Practice Questions
+
+                            </p>
+
+                        </div>
+
+                        <span class="task-status">
+
+                            Medium
+
+                        </span>
+
+                    </div>
+
+                    <div class="task-card">
+
+                        <div class="task-icon">
+
+                            📝
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                English Essay
+
+                            </h3>
+
+                            <p>
+
+                                Draft Revision
+
+                            </p>
+
+                        </div>
+
+                        <span class="task-status">
+
+                            Low
+
+                        </span>
+
+                    </div>
+
+                </section>
+
+                <!-- Recent Notes -->
+
+                <section class="section">
+
+                    <div class="section-title">
+
+                        <h2>
+
+                            Recent Notes
+
+                        </h2>
+
+                    </div>
+
+                    <div class="notes-grid">
+
+                        <div class="note-card">
+
+                            <span>
+
+                                📚
+
+                            </span>
+
+                            <h3>
+
+                                Chemistry
+
+                            </h3>
+
+                            <p>
+
+                                Atomic Structure
+
+                            </p>
+
+                        </div>
+
+                        <div class="note-card">
+
+                            <span>
+
+                                🌎
+
+                            </span>
+
+                            <h3>
+
+                                Geography
+
+                            </h3>
+
+                            <p>
+
+                                Climate Zones
+
+                            </p>
+
+                        </div>
+
+                        <div class="note-card">
+
+                            <span>
+
+                                💻
+
+                            </span>
+
+                            <h3>
+
+                                Programming
+
+                            </h3>
+
+                            <p>
+
+                                JavaScript Basics
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- Floating AI Button -->
+
+                <button
+                    class="floating-ai">
+
+                    ✨
+
+                </button>
+
+                <!-- Bottom Navigation -->
+
+                <nav class="bottom-nav">
+
+                    <button class="nav-item active">
+
+                        🏠
+
+                        <span>
+
+                            Home
+
+                        </span>
+
+                    </button>
+
+                    <button class="nav-item">
+
+                        📚
+
+                        <span>
+
+                            Notes
+
+                        </span>
+
+                    </button>
+
+                    <button class="nav-item">
+
+                        🤖
+
+                        <span>
+
+                            AI
+
+                        </span>
+
+                    </button>
+
+                    <button class="nav-item">
+
+                        📊
+
+                        <span>
+
+                            Progress
+
+                        </span>
+
+                    </button>
+
+                    <button class="nav-item">
+
+                        ⚙️
+
+                        <span>
+
+                            Settings
+
+                        </span>
+
+                    </button>
+
+                </nav>
+
+            </section>
+
+            <!-- ========================= -->
+            <!-- DATA SYNC SCREEN -->
+            <!-- PART 4 STARTS HERE -->
+                      <section
+                id="sync-screen"
+                class="screen">
+
+                <div class="sync-container">
+
+                    <div class="sync-animation">
+
+                        <div class="sync-ring"></div>
+                        <div class="sync-ring ring-two"></div>
+
+                        <div class="sync-icon">
+
+                            ☁️
+
+                        </div>
+
+                    </div>
+
+                    <h1>
+
+                        Synchronizing Data
+
+                    </h1>
+
+                    <p class="sync-description">
+
+                        Please wait while StudySync AI prepares
+                        your personalized learning environment.
+
+                    </p>
+
+                    <!-- Progress -->
+
+                    <div class="sync-progress">
+
+                        <div class="sync-progress-bar">
+
+                            <div
+                                id="syncProgress"
+                                class="sync-progress-fill">
+
+                            </div>
+
+                        </div>
+
+                        <span id="progressText">
+
+                            0%
+
+                        </span>
+
+                    </div>
+
+                    <!-- Activity Log -->
+
+                    <div class="sync-log">
+
+                        <div class="log-item">
+
+                            <span class="log-dot"></span>
+
+                            <span id="syncMessage">
+
+                                Initializing AI Engine...
+
+                            </span>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <span class="log-dot"></span>
+
+                            <span>
+
+                                Preparing Study Dashboard...
+
+                            </span>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <span class="log-dot"></span>
+
+                            <span>
+
+                                Loading Smart Planner...
+
+                            </span>
+
+                        </div>
+
+                        <div class="log-item">
+
+                            <span class="log-dot"></span>
+
+                            <span>
+
+                                Finalizing Setup...
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        id="finishBtn"
+                        class="primary-btn">
+
+                        Continue
+
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- JavaScript -->
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
