@@ -1,209 +1,306 @@
-/*=====================================================
-    StudySync AI v3
+/*==================================================
+    StudySync AI V4
     script.js - Part 1
-=====================================================*/
+==================================================*/
 
-"use strict";
-
-/* ==========================
-   Elements
-========================== */
+/*=========================
+    Elements
+=========================*/
 
 const screens = {
+
+    splash: document.getElementById("splashScreen"),
+
     welcome: document.getElementById("welcomeScreen"),
+
     permission: document.getElementById("permissionScreen"),
+
     dashboard: document.getElementById("dashboardScreen"),
+
     sync: document.getElementById("syncScreen")
+
 };
 
 const startBtn = document.getElementById("startBtn");
-const backBtn = document.getElementById("backToWelcome");
-const continueBtn = document.getElementById("continueBtn");
-const openSyncBtn = document.getElementById("openSync");
+
+const permissionNext = document.getElementById("permissionNext");
+
+const openSync = document.getElementById("openSync");
+
 const finishBtn = document.getElementById("finishBtn");
 
-/* ==========================
-   Current Screen
-========================== */
+/*=========================
+    Screen Manager
+=========================*/
 
-let currentScreen = "welcome";
+function showScreen(screen){
 
-/* ==========================
-   Screen Navigation
-========================== */
+    Object.values(screens).forEach(current=>{
 
-function hideAllScreens() {
-
-    Object.values(screens).forEach(screen => {
-
-        screen.classList.remove("active");
+        current.classList.remove("active");
 
     });
 
-}
-
-function showScreen(name) {
-
-    if (!screens[name]) return;
-
-    hideAllScreens();
-
-    screens[name].classList.add("active");
-
-    currentScreen = name;
+    screen.classList.add("active");
 
     window.scrollTo({
 
-        top: 0,
+        top:0,
 
-        behavior: "smooth"
+        behavior:"smooth"
 
     });
 
 }
 
-/* ==========================
-   Event Listeners
-========================== */
+/*=========================
+    Splash Animation
+=========================*/
 
-startBtn.addEventListener("click", () => {
+window.addEventListener("load",()=>{
 
-    showScreen("permission");
+    showScreen(screens.splash);
 
-});
+    setTimeout(()=>{
 
-backBtn.addEventListener("click", () => {
+        showScreen(screens.welcome);
 
-    showScreen("welcome");
-
-});
-
-continueBtn.addEventListener("click", () => {
-
-    showScreen("dashboard");
+    },2500);
 
 });
 
-openSyncBtn.addEventListener("click", () => {
+/*=========================
+    Navigation Buttons
+=========================*/
 
-    showScreen("sync");
+startBtn.addEventListener("click",()=>{
 
-});
-
-/* ==========================
-   Finish Button
-========================== */
-
-finishBtn.addEventListener("click", () => {
-
-    showScreen("dashboard");
+    showScreen(screens.permission);
 
 });
 
-/* ==========================
-   Startup
-========================== */
+permissionNext.addEventListener("click",()=>{
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    showScreen("welcome");
+    showScreen(screens.dashboard);
 
 });
-/*=====================================================
-    StudySync AI v3
+
+openSync.addEventListener("click",()=>{
+
+    showScreen(screens.sync);
+
+});
+/*==================================================
+    StudySync AI V4
     script.js - Part 2
-=====================================================*/
+==================================================*/
 
-"use strict";
+/*=========================
+    Sync Elements
+=========================*/
 
-/* ==========================
-   Ripple Effect
-========================== */
+const progressFill = document.getElementById("progressFill");
 
-function createRipple(event){
+const progressPercent = document.getElementById("progressPercent");
 
-    const button = event.currentTarget;
+const syncStatus = document.getElementById("syncStatus");
 
-    const ripple = document.createElement("span");
+const activityLogs = [
 
-    const rect = button.getBoundingClientRect();
+    document.getElementById("log1"),
 
-    const size = Math.max(rect.width, rect.height);
+    document.getElementById("log2"),
 
-    ripple.className = "ripple";
+    document.getElementById("log3"),
 
-    ripple.style.width = size + "px";
+    document.getElementById("log4")
 
-    ripple.style.height = size + "px";
+];
 
-    ripple.style.left = (event.clientX - rect.left - size / 2) + "px";
+/*=========================
+    Sync Animation
+=========================*/
 
-    ripple.style.top = (event.clientY - rect.top - size / 2) + "px";
+function startSync(){
 
-    button.appendChild(ripple);
+    let progress = 0;
 
-    setTimeout(() => {
+    const messages = [
 
-        ripple.remove();
+        "Connecting to AI...",
 
-    }, 650);
+        "Analyzing study habits...",
+
+        "Generating smart recommendations...",
+
+        "Finalizing dashboard..."
+
+    ];
+
+    syncStatus.textContent = messages[0];
+
+    activityLogs.forEach(log=>{
+
+        log.classList.remove("active");
+
+    });
+
+    activityLogs[0].classList.add("active");
+
+    finishBtn.classList.add("hidden");
+
+    progressFill.style.width="0%";
+
+    progressPercent.textContent="0%";
+
+    const timer=setInterval(()=>{
+
+        progress+=2;
+
+        progressFill.style.width=progress+"%";
+
+        progressPercent.textContent=progress+"%";
+
+        if(progress>=25){
+
+            activityLogs[0].classList.add("active");
+
+            syncStatus.textContent=messages[0];
+
+        }
+
+        if(progress>=50){
+
+            activityLogs[1].classList.add("active");
+
+            syncStatus.textContent=messages[1];
+
+        }
+
+        if(progress>=75){
+
+            activityLogs[2].classList.add("active");
+
+            syncStatus.textContent=messages[2];
+
+        }
+
+        if(progress>=95){
+
+            activityLogs[3].classList.add("active");
+
+            syncStatus.textContent=messages[3];
+
+        }
+
+        if(progress>=100){
+
+            clearInterval(timer);
+
+            progress=100;
+
+            progressFill.style.width="100%";
+
+            progressPercent.textContent="100%";
+
+            syncStatus.textContent="StudySync AI is Ready!";
+
+            finishBtn.classList.remove("hidden");
+
+        }
+
+    },70);
 
 }
 
-document.querySelectorAll("button").forEach(button=>{
+/*=========================
+    Start Sync
+=========================*/
 
-    button.addEventListener("click",createRipple);
+openSync.addEventListener("click",()=>{
+
+    showScreen(screens.sync);
+
+    startSync();
+
+});
+/*==================================================
+    StudySync AI V4
+    script.js - Part 3
+==================================================*/
+
+/*=========================
+    Finish Button
+=========================*/
+
+finishBtn.addEventListener("click",()=>{
+
+    showScreen(screens.dashboard);
+
+    animateStats();
 
 });
 
+/*=========================
+    Animated Statistics
+=========================*/
 
-/* ==========================
-   Permission Cards
-========================== */
+function animateValue(element,target,suffix=""){
 
-const permissionCards = document.querySelectorAll(".permission-card");
+    let current=0;
 
-permissionCards.forEach(card=>{
+    const step=Math.max(1,Math.ceil(target/40));
 
-    card.addEventListener("mouseenter",()=>{
+    const timer=setInterval(()=>{
 
-        card.style.transform="translateY(-4px) scale(1.01)";
+        current+=step;
 
-    });
+        if(current>=target){
 
-    card.addEventListener("mouseleave",()=>{
+            current=target;
 
-        card.style.transform="";
+            clearInterval(timer);
 
-    });
+        }
 
-});
+        element.textContent=current+suffix;
 
+    },25);
 
-/* ==========================
-   Permission Switches
-========================== */
+}
 
-const switches = document.querySelectorAll(".switch input");
+function animateStats(){
 
-switches.forEach(toggle=>{
+    const values=document.querySelectorAll(".stat-card h4");
+
+    if(values.length<3)return;
+
+    animateValue(values[0],12);
+
+    animateValue(values[1],5,"h");
+
+    animateValue(values[2],96,"%");
+
+}
+
+/*=========================
+    Permission Switches
+=========================*/
+
+document.querySelectorAll(".switch input").forEach(toggle=>{
 
     toggle.addEventListener("change",()=>{
 
-        const card = toggle.closest(".permission-card");
-
-        if(!card) return;
+        const card=toggle.closest(".permission-card");
 
         if(toggle.checked){
 
-            card.style.borderColor="#22C55E";
-
-            card.style.boxShadow="0 0 25px rgba(34,197,94,.15)";
+            card.style.borderColor="rgba(34,197,94,.5)";
+            card.style.boxShadow="0 0 18px rgba(34,197,94,.18)";
 
         }else{
 
             card.style.borderColor="rgba(255,255,255,.08)";
-
             card.style.boxShadow="none";
 
         }
@@ -212,348 +309,213 @@ switches.forEach(toggle=>{
 
 });
 
+/*=========================
+    Bottom Navigation
+=========================*/
 
-/* ==========================
-   Dashboard Animation
-========================== */
+const navItems=document.querySelectorAll(".nav-item");
 
-function animateDashboard(){
+navItems.forEach(item=>{
 
-    const cards=document.querySelectorAll(
+    item.addEventListener("click",()=>{
 
-        ".hero-card,.stat-card,.course-card,.ai-card"
+        navItems.forEach(btn=>{
 
-    );
+            btn.classList.remove("active");
 
-    cards.forEach((card,index)=>{
+        });
 
-        card.style.opacity="0";
-
-        card.style.transform="translateY(25px)";
-
-        setTimeout(()=>{
-
-            card.style.transition=".45s ease";
-
-            card.style.opacity="1";
-
-            card.style.transform="translateY(0)";
-
-        },index*120);
+        item.classList.add("active");
 
     });
-
-}
-
-
-/* ==========================
-   Observe Dashboard
-========================== */
-
-const dashboardObserver=new MutationObserver(()=>{
-
-    if(screens.dashboard.classList.contains("active")){
-
-        animateDashboard();
-
-    }
 
 });
 
-dashboardObserver.observe(
+/*=========================
+    Ripple Effect
+=========================*/
 
-    screens.dashboard,
+document.querySelectorAll(".primary-btn").forEach(button=>{
 
-    {
+    button.addEventListener("click",()=>{
 
-        attributes:true,
+        button.animate(
 
-        attributeFilter:["class"]
+            [
 
-    }
+                {
 
-);
-/*=====================================================
-    StudySync AI v3
-    script.js - Part 3
-=====================================================*/
+                    transform:"scale(1)"
 
-"use strict";
+                },
 
-/* ==========================
-   Sync Elements
-========================== */
+                {
 
-const progressFill = document.getElementById("progressFill");
-const progressPercent = document.getElementById("progressPercent");
+                    transform:"scale(.96)"
 
-const syncStatus = document.getElementById("syncStatus");
+                },
 
-const log1 = document.getElementById("log1");
-const log2 = document.getElementById("log2");
-const log3 = document.getElementById("log3");
-const log4 = document.getElementById("log4");
-const log5 = document.getElementById("log5");
+                {
 
-const activityItems = document.querySelectorAll(".activity-item");
+                    transform:"scale(1)"
 
-let syncStarted = false;
+                }
 
-/* ==========================
-   AI Sync
-========================== */
+            ],
 
-function startSync(){
+            {
 
-    if(syncStarted) return;
+                duration:220,
 
-    syncStarted = true;
+                easing:"ease-out"
 
-    finishBtn.classList.add("hidden");
+            }
 
-    progressFill.style.width = "0%";
-
-    progressPercent.textContent = "0%";
-
-    activityItems.forEach(item=>{
-
-        item.classList.remove("complete");
+        );
 
     });
 
-    const stages=[
+});
+/*==================================================
+    StudySync AI V4
+    script.js - Part 4
+==================================================*/
+
+/*=========================
+    Floating Logo Animation
+=========================*/
+
+document.querySelectorAll(".logo").forEach(logo=>{
+
+    logo.animate(
+
+        [
+
+            {
+
+                transform:"translateY(0px)"
+
+            },
+
+            {
+
+                transform:"translateY(-10px)"
+
+            },
+
+            {
+
+                transform:"translateY(0px)"
+
+            }
+
+        ],
 
         {
 
-            percent:20,
+            duration:3000,
 
-            message:"Connecting to AI Server...",
+            iterations:Infinity,
 
-            log:0
-
-        },
-
-        {
-
-            percent:40,
-
-            message:"Loading Study Database...",
-
-            log:1
-
-        },
-
-        {
-
-            percent:60,
-
-            message:"Synchronizing Learning Profile...",
-
-            log:2
-
-        },
-
-        {
-
-            percent:80,
-
-            message:"Optimizing AI Recommendations...",
-
-            log:3
-
-        },
-
-        {
-
-            percent:100,
-
-            message:"Setup Complete!",
-
-            log:4
+            easing:"ease-in-out"
 
         }
 
-    ];
+    );
 
-    stages.forEach((stage,index)=>{
+});
 
-        setTimeout(()=>{
+/*=========================
+    Fade-in Cards
+=========================*/
 
-            progressFill.style.width=stage.percent+"%";
+const observer=new IntersectionObserver(entries=>{
 
-            progressPercent.textContent=stage.percent+"%";
+    entries.forEach(entry=>{
 
-            syncStatus.textContent=stage.message;
+        if(entry.isIntersecting){
 
-            activityItems[stage.log].classList.add("complete");
+            entry.target.animate(
 
-            if(stage.percent===100){
-
-                log5.textContent="StudySync AI is ready.";
-
-                finishBtn.classList.remove("hidden");
-
-                finishBtn.animate([
+                [
 
                     {
 
-                        transform:"scale(.8)",
+                        opacity:0,
 
-                        opacity:0
+                        transform:"translateY(30px)"
 
                     },
 
                     {
 
-                        transform:"scale(1)",
+                        opacity:1,
 
-                        opacity:1
+                        transform:"translateY(0)"
 
                     }
 
-                ],{
+                ],
 
-                    duration:500,
+                {
 
-                    fill:"forwards"
+                    duration:700,
 
-                });
+                    easing:"ease"
 
-                syncStarted=false;
+                }
 
-            }
+            );
 
-        },index*1500);
+        }
 
     });
+
+});
+
+document.querySelectorAll(
+
+    ".permission-card,.course-card,.stat-card,.insight-card"
+
+).forEach(card=>{
+
+    observer.observe(card);
+
+});
+
+/*=========================
+    Ambient Background
+=========================*/
+
+const lights=document.querySelectorAll(".bg-light");
+
+let angle=0;
+
+function animateLights(){
+
+    angle+=0.003;
+
+    lights.forEach((light,index)=>{
+
+        const radius=index===0?30:25;
+
+        const x=Math.cos(angle+(index*2))*radius;
+
+        const y=Math.sin(angle+(index*2))*radius;
+
+        light.style.transform=`translate(${x}px, ${y}px)`;
+
+    });
+
+    requestAnimationFrame(animateLights);
 
 }
 
-/* ==========================
-   Start Sync
-========================== */
+animateLights();
 
-openSyncBtn.addEventListener("click",()=>{
-
-    setTimeout(startSync,400);
-
-});
-
-/* ==========================
-   Finish
-========================== */
-
-finishBtn.addEventListener("click",()=>{
-
-    showScreen("dashboard");
-
-});
-
-/* ==========================
-   Welcome Animation
-========================== */
-
-window.addEventListener("load",()=>{
-
-    document.querySelectorAll(".feature-card").forEach((card,index)=>{
-
-        card.style.opacity="0";
-
-        card.style.transform="translateY(20px)";
-
-        setTimeout(()=>{
-
-            card.style.transition=".45s ease";
-
-            card.style.opacity="1";
-
-            card.style.transform="translateY(0)";
-
-        },index*120);
-
-    });
-
-});
-
-/* ==========================
-   Console Message
-========================== */
-
-console.log(
-"%cStudySync AI v3 Loaded",
-"color:#22C55E;font-size:16px;font-weight:bold;"
-);
-/*=====================================================
-    StudySync AI v3
-    script.js - Part 4
-=====================================================*/
-
-"use strict";
-
-/* ==========================
-   Save Permissions
-========================== */
-
-const permissionInputs = document.querySelectorAll(".switch input");
-
-permissionInputs.forEach((input, index) => {
-
-    const saved = localStorage.getItem("permission_" + index);
-
-    if (saved !== null && !input.disabled) {
-
-        input.checked = saved === "true";
-
-    }
-
-    input.addEventListener("change", () => {
-
-        localStorage.setItem(
-            "permission_" + index,
-            input.checked
-        );
-
-        showToast(
-            input.checked
-                ? "Permission Enabled"
-                : "Permission Disabled"
-        );
-
-    });
-
-});
-
-
-/* ==========================
-   Toast Notification
-========================== */
-
-const toast = document.createElement("div");
-
-toast.id = "toast";
-
-document.body.appendChild(toast);
-
-function showToast(message){
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    clearTimeout(toast.timer);
-
-    toast.timer = setTimeout(()=>{
-
-        toast.classList.remove("show");
-
-    },2000);
-
-}
-
-
-/* ==========================
-   Keyboard Shortcuts
-========================== */
+/*=========================
+    Keyboard Shortcuts
+=========================*/
 
 document.addEventListener("keydown",(event)=>{
 
@@ -561,27 +523,27 @@ document.addEventListener("keydown",(event)=>{
 
         case "1":
 
-            showScreen("welcome");
+            showScreen(screens.welcome);
 
             break;
 
         case "2":
 
-            showScreen("permission");
+            showScreen(screens.permission);
 
             break;
 
         case "3":
 
-            showScreen("dashboard");
+            showScreen(screens.dashboard);
 
             break;
 
         case "4":
 
-            showScreen("sync");
+            showScreen(screens.sync);
 
-            setTimeout(startSync,300);
+            startSync();
 
             break;
 
@@ -589,82 +551,28 @@ document.addEventListener("keydown",(event)=>{
 
 });
 
-
-/* ==========================
-   Prevent Double Click Spam
-========================== */
-
-document.querySelectorAll(".primary-btn").forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        button.disabled = true;
-
-        setTimeout(()=>{
-
-            button.disabled = false;
-
-        },700);
-
-    });
-
-});
-
-
-/* ==========================
-   Button Hover Sound
-========================== */
-
-document.querySelectorAll("button").forEach(button=>{
-
-    button.addEventListener("mouseenter",()=>{
-
-        button.style.transition=".25s";
-
-    });
-
-});
-
-
-/* ==========================
-   Page Fade Transition
-========================== */
-
-const originalShowScreen = showScreen;
-
-showScreen = function(name){
-
-    hideAllScreens();
-
-    const target = screens[name];
-
-    target.style.opacity = "0";
-
-    target.style.display = "block";
-
-    requestAnimationFrame(()=>{
-
-        target.style.transition = ".35s ease";
-
-        target.style.opacity = "1";
-
-    });
-
-    target.classList.add("active");
-
-    currentScreen = name;
-
-}
-
-
-/* ==========================
-   Welcome
-========================== */
+/*=========================
+    Console Message
+=========================*/
 
 console.log(
 
-"%cWelcome to StudySync AI v3",
+`%cStudySync AI V4
 
-"color:#22C55E;font-size:18px;font-weight:bold;"
+Developed for Educational Purposes
+
+Status: Ready ✓`,
+
+"color:#22C55E;font-size:16px;font-weight:bold;"
 
 );
+
+/*=========================
+    Initialization
+=========================*/
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    showScreen(screens.splash);
+
+});
