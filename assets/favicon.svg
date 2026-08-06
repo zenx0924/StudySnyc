@@ -1,1 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#16A34A"/>
+    </linearGradient>
+  </defs>
 
+  <rect width="64" height="64" rx="16" fill="#090909"/>
+
+  <circle cx="32" cy="32" r="18" fill="url(#g)"/>
+
+  <path d="M32 22
+           C26 22 22 27 22 32
+           C22 37 26 42 32 42
+           C38 42 42 37 42 32
+           C42 27 38 22 32 22Z"
+        fill="#090909"/>
+
+  <text x="32"
+        y="37"
+        font-family="Arial"
+        font-size="14"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="#22C55E">
+    AI
+  </text>
+</svg>
