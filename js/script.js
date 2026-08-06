@@ -1,33 +1,36 @@
-/* =====================================================
-   StudySync AI
-   script.js - Part 1
-   Navigation & Screen Management
-===================================================== */
+/*=====================================================
+    StudySync AI v3
+    script.js - Part 1
+=====================================================*/
 
-// =============================
-// Screen References
-// =============================
+"use strict";
+
+/* ==========================
+   Elements
+========================== */
 
 const screens = {
-    welcome: document.getElementById("welcome-screen"),
-    permission: document.getElementById("permission-screen"),
-    dashboard: document.getElementById("dashboard-screen"),
-    sync: document.getElementById("sync-screen")
+    welcome: document.getElementById("welcomeScreen"),
+    permission: document.getElementById("permissionScreen"),
+    dashboard: document.getElementById("dashboardScreen"),
+    sync: document.getElementById("syncScreen")
 };
 
-// =============================
-// Buttons
-// =============================
-
-const startButton = document.getElementById("startButton");
+const startBtn = document.getElementById("startBtn");
+const backBtn = document.getElementById("backToWelcome");
 const continueBtn = document.getElementById("continueBtn");
+const openSyncBtn = document.getElementById("openSync");
 const finishBtn = document.getElementById("finishBtn");
 
-const backButton = document.querySelector(".back-btn");
+/* ==========================
+   Current Screen
+========================== */
 
-// =============================
-// Navigation
-// =============================
+let currentScreen = "welcome";
+
+/* ==========================
+   Screen Navigation
+========================== */
 
 function hideAllScreens() {
 
@@ -39,384 +42,518 @@ function hideAllScreens() {
 
 }
 
-function showScreen(screen) {
+function showScreen(name) {
+
+    if (!screens[name]) return;
 
     hideAllScreens();
 
-    screen.classList.add("active");
+    screens[name].classList.add("active");
+
+    currentScreen = name;
 
     window.scrollTo({
+
         top: 0,
+
         behavior: "smooth"
-    });
-
-}
-
-// =============================
-// Welcome
-// =============================
-
-if (startButton) {
-
-    startButton.addEventListener("click", () => {
-
-        showScreen(screens.permission);
 
     });
 
 }
 
-// =============================
-// Back Button
-// =============================
+/* ==========================
+   Event Listeners
+========================== */
 
-if (backButton) {
+startBtn.addEventListener("click", () => {
 
-    backButton.addEventListener("click", () => {
+    showScreen("permission");
 
-        showScreen(screens.welcome);
+});
 
-    });
+backBtn.addEventListener("click", () => {
 
-}
+    showScreen("welcome");
 
-// =============================
-// Continue
-// =============================
+});
 
-if (continueBtn) {
+continueBtn.addEventListener("click", () => {
 
-    continueBtn.addEventListener("click", () => {
+    showScreen("dashboard");
 
-        showScreen(screens.dashboard);
+});
 
-    });
+openSyncBtn.addEventListener("click", () => {
 
-}
+    showScreen("sync");
 
-// =============================
-// Dashboard → Sync
-// =============================
+});
 
-const floatingAI = document.querySelector(".floating-ai");
+/* ==========================
+   Finish Button
+========================== */
 
-if (floatingAI) {
+finishBtn.addEventListener("click", () => {
 
-    floatingAI.addEventListener("click", () => {
+    showScreen("dashboard");
 
-        showScreen(screens.sync);
+});
 
-    });
+/* ==========================
+   Startup
+========================== */
 
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-// =============================
-// Finish Button
-// =============================
+    showScreen("welcome");
 
-if (finishBtn) {
+});
+/*=====================================================
+    StudySync AI v3
+    script.js - Part 2
+=====================================================*/
 
-    finishBtn.addEventListener("click", () => {
+"use strict";
 
-        showScreen(screens.dashboard);
+/* ==========================
+   Ripple Effect
+========================== */
 
-    });
+function createRipple(event){
 
-}
+    const button = event.currentTarget;
 
-// =============================
-// Initial Screen
-// =============================
+    const ripple = document.createElement("span");
 
-showScreen(screens.welcome);
-/* =====================================================
-   StudySync AI
-   script.js - Part 2
-   Permissions & UI Interactions
-===================================================== */
+    const rect = button.getBoundingClientRect();
 
-// =============================
-// Permission Switches
-// =============================
+    const size = Math.max(rect.width, rect.height);
 
-const allowAllBtn = document.getElementById("allowAllBtn");
-const switches = document.querySelectorAll(
-    ".permission-card input[type='checkbox']"
-);
+    ripple.className = "ripple";
 
-// Allow All Button
-if (allowAllBtn) {
+    ripple.style.width = size + "px";
 
-    allowAllBtn.addEventListener("click", () => {
+    ripple.style.height = size + "px";
 
-        switches.forEach(toggle => {
+    ripple.style.left = (event.clientX - rect.left - size / 2) + "px";
 
-            toggle.checked = true;
+    ripple.style.top = (event.clientY - rect.top - size / 2) + "px";
 
-        });
+    button.appendChild(ripple);
 
-        allowAllBtn.textContent = "✓ All Permissions Enabled";
+    setTimeout(() => {
 
-        setTimeout(() => {
+        ripple.remove();
 
-            allowAllBtn.textContent = "Allow All";
-
-        }, 1800);
-
-    });
+    }, 650);
 
 }
 
-// =============================
-// Permission Card Animation
-// =============================
+document.querySelectorAll("button").forEach(button=>{
+
+    button.addEventListener("click",createRipple);
+
+});
+
+
+/* ==========================
+   Permission Cards
+========================== */
 
 const permissionCards = document.querySelectorAll(".permission-card");
 
-permissionCards.forEach(card => {
+permissionCards.forEach(card=>{
 
-    card.addEventListener("click", (event) => {
+    card.addEventListener("mouseenter",()=>{
 
-        // Prevent double-toggle when clicking directly on the checkbox
-        if (event.target.tagName === "INPUT") return;
+        card.style.transform="translateY(-4px) scale(1.01)";
 
-        const checkbox = card.querySelector("input");
+    });
 
-        if (!checkbox) return;
+    card.addEventListener("mouseleave",()=>{
 
-        checkbox.checked = !checkbox.checked;
+        card.style.transform="";
 
     });
 
 });
 
-// =============================
-// Bottom Navigation
-// =============================
 
-const navItems = document.querySelectorAll(".nav-item");
+/* ==========================
+   Permission Switches
+========================== */
 
-navItems.forEach(item => {
+const switches = document.querySelectorAll(".switch input");
 
-    item.addEventListener("click", () => {
+switches.forEach(toggle=>{
 
-        navItems.forEach(nav => {
+    toggle.addEventListener("change",()=>{
 
-            nav.classList.remove("active");
+        const card = toggle.closest(".permission-card");
 
-        });
+        if(!card) return;
 
-        item.classList.add("active");
+        if(toggle.checked){
+
+            card.style.borderColor="#22C55E";
+
+            card.style.boxShadow="0 0 25px rgba(34,197,94,.15)";
+
+        }else{
+
+            card.style.borderColor="rgba(255,255,255,.08)";
+
+            card.style.boxShadow="none";
+
+        }
 
     });
 
 });
 
-// =============================
-// Floating AI Button Animation
-// =============================
 
-if (floatingAI) {
+/* ==========================
+   Dashboard Animation
+========================== */
 
-    floatingAI.addEventListener("mousedown", () => {
+function animateDashboard(){
 
-        floatingAI.style.transform = "scale(.94)";
+    const cards=document.querySelectorAll(
 
-    });
+        ".hero-card,.stat-card,.course-card,.ai-card"
 
-    floatingAI.addEventListener("mouseup", () => {
+    );
 
-        floatingAI.style.transform = "";
+    cards.forEach((card,index)=>{
 
-    });
+        card.style.opacity="0";
 
-    floatingAI.addEventListener("mouseleave", () => {
+        card.style.transform="translateY(25px)";
 
-        floatingAI.style.transform = "";
+        setTimeout(()=>{
+
+            card.style.transition=".45s ease";
+
+            card.style.opacity="1";
+
+            card.style.transform="translateY(0)";
+
+        },index*120);
 
     });
 
 }
 
-// =============================
-// Hero Card Button
-// =============================
 
-const askAIButton = document.querySelector(".hero-card .primary-btn");
+/* ==========================
+   Observe Dashboard
+========================== */
 
-if (askAIButton) {
+const dashboardObserver=new MutationObserver(()=>{
 
-    askAIButton.addEventListener("click", () => {
+    if(screens.dashboard.classList.contains("active")){
 
-        alert(
-            "🤖 AI Assistant\n\nThis is a fictional interface created for a short film."
+        animateDashboard();
+
+    }
+
+});
+
+dashboardObserver.observe(
+
+    screens.dashboard,
+
+    {
+
+        attributes:true,
+
+        attributeFilter:["class"]
+
+    }
+
+);
+/*=====================================================
+    StudySync AI v3
+    script.js - Part 3
+=====================================================*/
+
+"use strict";
+
+/* ==========================
+   Sync Elements
+========================== */
+
+const progressFill = document.getElementById("progressFill");
+const progressPercent = document.getElementById("progressPercent");
+
+const syncStatus = document.getElementById("syncStatus");
+
+const log1 = document.getElementById("log1");
+const log2 = document.getElementById("log2");
+const log3 = document.getElementById("log3");
+const log4 = document.getElementById("log4");
+const log5 = document.getElementById("log5");
+
+const activityItems = document.querySelectorAll(".activity-item");
+
+let syncStarted = false;
+
+/* ==========================
+   AI Sync
+========================== */
+
+function startSync(){
+
+    if(syncStarted) return;
+
+    syncStarted = true;
+
+    finishBtn.classList.add("hidden");
+
+    progressFill.style.width = "0%";
+
+    progressPercent.textContent = "0%";
+
+    activityItems.forEach(item=>{
+
+        item.classList.remove("complete");
+
+    });
+
+    const stages=[
+
+        {
+
+            percent:20,
+
+            message:"Connecting to AI Server...",
+
+            log:0
+
+        },
+
+        {
+
+            percent:40,
+
+            message:"Loading Study Database...",
+
+            log:1
+
+        },
+
+        {
+
+            percent:60,
+
+            message:"Synchronizing Learning Profile...",
+
+            log:2
+
+        },
+
+        {
+
+            percent:80,
+
+            message:"Optimizing AI Recommendations...",
+
+            log:3
+
+        },
+
+        {
+
+            percent:100,
+
+            message:"Setup Complete!",
+
+            log:4
+
+        }
+
+    ];
+
+    stages.forEach((stage,index)=>{
+
+        setTimeout(()=>{
+
+            progressFill.style.width=stage.percent+"%";
+
+            progressPercent.textContent=stage.percent+"%";
+
+            syncStatus.textContent=stage.message;
+
+            activityItems[stage.log].classList.add("complete");
+
+            if(stage.percent===100){
+
+                log5.textContent="StudySync AI is ready.";
+
+                finishBtn.classList.remove("hidden");
+
+                finishBtn.animate([
+
+                    {
+
+                        transform:"scale(.8)",
+
+                        opacity:0
+
+                    },
+
+                    {
+
+                        transform:"scale(1)",
+
+                        opacity:1
+
+                    }
+
+                ],{
+
+                    duration:500,
+
+                    fill:"forwards"
+
+                });
+
+                syncStarted=false;
+
+            }
+
+        },index*1500);
+
+    });
+
+}
+
+/* ==========================
+   Start Sync
+========================== */
+
+openSyncBtn.addEventListener("click",()=>{
+
+    setTimeout(startSync,400);
+
+});
+
+/* ==========================
+   Finish
+========================== */
+
+finishBtn.addEventListener("click",()=>{
+
+    showScreen("dashboard");
+
+});
+
+/* ==========================
+   Welcome Animation
+========================== */
+
+window.addEventListener("load",()=>{
+
+    document.querySelectorAll(".feature-card").forEach((card,index)=>{
+
+        card.style.opacity="0";
+
+        card.style.transform="translateY(20px)";
+
+        setTimeout(()=>{
+
+            card.style.transition=".45s ease";
+
+            card.style.opacity="1";
+
+            card.style.transform="translateY(0)";
+
+        },index*120);
+
+    });
+
+});
+
+/* ==========================
+   Console Message
+========================== */
+
+console.log(
+"%cStudySync AI v3 Loaded",
+"color:#22C55E;font-size:16px;font-weight:bold;"
+);
+/*=====================================================
+    StudySync AI v3
+    script.js - Part 4
+=====================================================*/
+
+"use strict";
+
+/* ==========================
+   Save Permissions
+========================== */
+
+const permissionInputs = document.querySelectorAll(".switch input");
+
+permissionInputs.forEach((input, index) => {
+
+    const saved = localStorage.getItem("permission_" + index);
+
+    if (saved !== null && !input.disabled) {
+
+        input.checked = saved === "true";
+
+    }
+
+    input.addEventListener("change", () => {
+
+        localStorage.setItem(
+            "permission_" + index,
+            input.checked
+        );
+
+        showToast(
+            input.checked
+                ? "Permission Enabled"
+                : "Permission Disabled"
         );
 
     });
 
-}
-
-// =============================
-// Small Fade Animation
-// =============================
-
-document.querySelectorAll(".glass-card, .feature-card, .task-card, .note-card")
-.forEach(card => {
-
-    card.addEventListener("mouseenter", () => {
-
-        card.style.transform = "translateY(-4px)";
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-        card.style.transform = "";
-
-    });
-
 });
-/* =====================================================
-   StudySync AI
-   script.js - Part 3
-   Sync Animation
-===================================================== */
 
-// =============================
-// Sync Elements
-// =============================
 
-const syncProgress = document.getElementById("syncProgress");
-const progressText = document.getElementById("progressText");
-const syncMessage = document.getElementById("syncMessage");
+/* ==========================
+   Toast Notification
+========================== */
 
-let syncRunning = false;
+const toast = document.createElement("div");
 
-// Fictional messages for the short film
-const syncMessages = [
+toast.id = "toast";
 
-    "Initializing AI Engine...",
+document.body.appendChild(toast);
 
-    "Loading Study Planner...",
+function showToast(message){
 
-    "Connecting Learning Database...",
+    toast.textContent = message;
 
-    "Analyzing Study Habits...",
+    toast.classList.add("show");
 
-    "Building Personalized Dashboard...",
+    clearTimeout(toast.timer);
 
-    "Optimizing AI Recommendations...",
+    toast.timer = setTimeout(()=>{
 
-    "Synchronizing Cloud Data...",
+        toast.classList.remove("show");
 
-    "Preparing Smart Notes...",
-
-    "Finalizing Setup...",
-
-    "Synchronization Complete."
-
-];
-
-// =============================
-// Sync Animation
-// =============================
-
-function startSync(){
-
-    if(syncRunning) return;
-
-    syncRunning = true;
-
-    let progress = 0;
-
-    let messageIndex = 0;
-
-    syncProgress.style.width = "0%";
-    progressText.textContent = "0%";
-
-    const timer = setInterval(()=>{
-
-        progress += Math.floor(Math.random()*6)+2;
-
-        if(progress > 100){
-
-            progress = 100;
-
-        }
-
-        syncProgress.style.width = progress + "%";
-
-        progressText.textContent = progress + "%";
-
-        if(messageIndex < syncMessages.length){
-
-            syncMessage.textContent = syncMessages[messageIndex];
-
-        }
-
-        if(progress > (messageIndex+1)*10){
-
-            messageIndex++;
-
-        }
-
-        if(progress >= 100){
-
-            clearInterval(timer);
-
-            syncMessage.textContent = "✅ Synchronization Complete";
-
-            if(finishBtn){
-
-                finishBtn.disabled = false;
-
-                finishBtn.textContent = "Open Dashboard";
-
-            }
-
-            syncRunning = false;
-
-        }
-
-    },250);
+    },2000);
 
 }
 
-// =============================
-// Start Sync Automatically
-// =============================
 
-if(floatingAI){
-
-    floatingAI.addEventListener("click",()=>{
-
-        setTimeout(startSync,400);
-
-    });
-
-}
-
-// =============================
-// Restart Sync Every Visit
-// =============================
-
-if(finishBtn){
-
-    finishBtn.addEventListener("click",()=>{
-
-        syncProgress.style.width = "0%";
-
-        progressText.textContent = "0%";
-
-        syncMessage.textContent = "Initializing AI Engine...";
-
-    });
-
-}
-
-// =============================
-// Keyboard Shortcuts (Demo)
-// =============================
+/* ==========================
+   Keyboard Shortcuts
+========================== */
 
 document.addEventListener("keydown",(event)=>{
 
@@ -424,22 +561,25 @@ document.addEventListener("keydown",(event)=>{
 
         case "1":
 
-            showScreen(screens.welcome);
+            showScreen("welcome");
+
             break;
 
         case "2":
 
-            showScreen(screens.permission);
+            showScreen("permission");
+
             break;
 
         case "3":
 
-            showScreen(screens.dashboard);
+            showScreen("dashboard");
+
             break;
 
         case "4":
 
-            showScreen(screens.sync);
+            showScreen("sync");
 
             setTimeout(startSync,300);
 
@@ -449,4 +589,82 @@ document.addEventListener("keydown",(event)=>{
 
 });
 
-console.log("🎓 StudySync AI Loaded Successfully");
+
+/* ==========================
+   Prevent Double Click Spam
+========================== */
+
+document.querySelectorAll(".primary-btn").forEach(button=>{
+
+    button.addEventListener("click",()=>{
+
+        button.disabled = true;
+
+        setTimeout(()=>{
+
+            button.disabled = false;
+
+        },700);
+
+    });
+
+});
+
+
+/* ==========================
+   Button Hover Sound
+========================== */
+
+document.querySelectorAll("button").forEach(button=>{
+
+    button.addEventListener("mouseenter",()=>{
+
+        button.style.transition=".25s";
+
+    });
+
+});
+
+
+/* ==========================
+   Page Fade Transition
+========================== */
+
+const originalShowScreen = showScreen;
+
+showScreen = function(name){
+
+    hideAllScreens();
+
+    const target = screens[name];
+
+    target.style.opacity = "0";
+
+    target.style.display = "block";
+
+    requestAnimationFrame(()=>{
+
+        target.style.transition = ".35s ease";
+
+        target.style.opacity = "1";
+
+    });
+
+    target.classList.add("active");
+
+    currentScreen = name;
+
+}
+
+
+/* ==========================
+   Welcome
+========================== */
+
+console.log(
+
+"%cWelcome to StudySync AI v3",
+
+"color:#22C55E;font-size:18px;font-weight:bold;"
+
+);
